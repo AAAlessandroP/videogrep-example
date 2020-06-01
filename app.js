@@ -18,10 +18,6 @@ app.use(bodyParser.json());
 // NO fileUpload x multer
 // NO fileUpload x multer
 
-app.get("/data/:file",/*loggedck*/(req, res) => {
-    res.sendFile('./data/' + req.params.file, { root: __dirname })
-})
-
 
 const listener = app.listen(process.env.PORT || 3000, function () {
     console.log("* Your app is listening on port " + listener.address().port);
@@ -38,12 +34,12 @@ cd .local/bin&&
 app.get('/download', (req, res) => {
     console.log(`req.query`, req.query);
     exec(`cd .local/bin && /app/.local/bin/youtube-dl ${decodeURIComponent(req.query.videoUrl)} -f worst --write-auto-sub&&
-./videogrep -i *.mp4 --use-vtt -o ${Date.now()} --search '${req.query.searchTerm}'&& mv ${Date.now()}.mp4 ../../public/
+./videogrep -i *.mp4 --use-vtt -o a${Date.now()} --search '${req.query.searchTerm}'&& mv a${Date.now()}.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
         console.log(`stdout`, stdout);
-        res.redirect("/supercut.mp4");
+        res.redirect("/");
     })
 });
 
