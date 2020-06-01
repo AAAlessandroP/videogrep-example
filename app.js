@@ -29,15 +29,16 @@ const listener = app.listen(process.env.PORT || 3000, function () {
 
 
 var exec = require('child_process').exec;
-
-app.get('/download', (req, res) => {
-    console.log(`req.query`, req.query);
-    exec(`curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py&&
+exec(`curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py&&
 python get-pip.py&&
 cd .local/bin&&
 ./pip install videogrep&&
-./pip install youtube-dl&&
-/app/.local/bin/youtube-dl ${req.query.videoUrl || "https://www.youtube.com/watch?v=md-KrR0Dj_w"} --write-auto-sub&&
+./pip install youtube-dl`);
+
+app.get('/download', (req, res) => {
+    console.log(`req.query`, req.query);
+    exec(`
+/app/.local/bin/youtube-dl ${req.query.videoUrl || "https://www.youtube.com/watch?v=md-KrR0Dj_w"} -f worstvideo --write-auto-sub&&
 ./videogrep -i *.mp4 --use-vtt --search '${req.query.searchTerm || "book"}'&& mv supercut.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
