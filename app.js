@@ -6,7 +6,8 @@ const { ObjectId } = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 var bodyParser = require("body-parser");
 const fetch = require("node-fetch");
-app.use(express.static("mia_pag"));
+const fs = require("fs");
+// app.use(express.static("mia_pag"));
 app.use(express.static("public"));
 require('dotenv').config()
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,46 +48,26 @@ app.get('/download', (req, res) => {
     })
 });
 
-var aws = require('aws-sdk')
-var multer = require('multer')
-var multerS3 = require('multer-s3')
-var config = new aws.Config({
 
-    accessKeyId: process.env.accessKeyId,
-    secretAccessKey: process.env.secretAccessKey,
-    region: 'eu-de',
-    endpoint: 's3.eu-de.cloud-object-storage.appdomain.cloud',
-    s3BucketEndpoint: false
-});
-
-var s3 = new aws.S3(config
-)
-
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: process.env.bucketName,
-        metadata: function (req, file, cb) {
-            console.log(`file`, file);
-            cb(null, { fieldName: file.fieldname });
-        },
-        key: function (req, file, cb) {
-            cb(null, file.originalname)
-        }
-    })
+app.get("/", (req, res) => {
+    let s = `
+    <!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    
+    <body>
+    <ul>`;
+    fs.readdirSync("public/").forEach(filename => {
+        s += `<li><a href='/${filename}'>${filename}</a></li>`;
+        // console.log(`filename`, filename);
+    });
+    s += `</ul></body>
+    
+    </html>`;
+    res.send(s)
 })
-
-// app.post('/upload', upload.array('photos', 3), function (req, res, next) {
-//     res.send('Successfully uploaded ' + req.files.length + ' files!')
-// })
-
-// async function getImage() {
-//     const data = s3.getObject(
-//         {
-//             Bucket: process.env.bucketName,
-//             Key: 'pic.jpg'
-//         }
-
-//     ).promise();
-//     return data;
-// }

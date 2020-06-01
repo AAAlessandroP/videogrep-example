@@ -8,19 +8,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.684.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.3",
     "ibm-cos-sdk": "^1.6.1",
-    "mongodb": "*",
-    "multer": "^1.4.2",
-    "multer-s3": "^2.9.0",
-    "node-fetch": "*",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.5",
-    "s3": "^4.4.0",
-    "skipper-s3": "^0.6.0"
+    "mongodb": "*"
   },
   "author": "me",
   "license": "MIT"
