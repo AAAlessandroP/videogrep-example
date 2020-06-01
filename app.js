@@ -5,7 +5,6 @@ const uri = `mongodb+srv://corona:${process.env.PASS}@miocluster2-igwb8.mongodb.
 const { ObjectId } = require("mongodb");
 const MongoClient = require("mongodb").MongoClient;
 var bodyParser = require("body-parser");
-const fetch = require("node-fetch");
 const fs = require("fs");
 // app.use(express.static("mia_pag"));
 app.use(express.static("public"));
