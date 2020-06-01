@@ -57,7 +57,7 @@ app.get("/", (req, res) => {
     
     <body>
     <ul>`;
-    fs.readdirSync("/app/public").forEach(filename => {
+    fs.readdirSync("./public").forEach(filename => {
         s += `<li><a href='/${filename}'>${filename}</a></li>`;
         // console.log(`filename`, filename);
     });
