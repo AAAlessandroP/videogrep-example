@@ -25,7 +25,7 @@ const listener = app.listen(process.env.PORT || 3000, function () {
 
 
 var { exec, execSync } = require('child_process');
-exec(`curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py&&
+execSync(`curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py&&
 python get-pip.py&&
 cd .local/bin&&
 ./pip install videogrep&&
@@ -34,7 +34,7 @@ cd .local/bin&&
 app.get('/download', (req, res) => {
     console.log(`req.query`, req.query);
     exec(`cd .local/bin && /app/.local/bin/youtube-dl ${decodeURIComponent(req.query.videoUrl)} -f worst --write-auto-sub&&
-./videogrep -i *.mp4 --use-vtt } --search '${req.query.searchTerm}'&& mv supercut.mp4 ../../public/
+./videogrep -i *.mp4 --use-vtt --search '${req.query.searchTerm}'&& mv supercut.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
