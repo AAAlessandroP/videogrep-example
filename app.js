@@ -38,7 +38,7 @@ cd .local/bin&&
 app.get('/download', (req, res) => {
     console.log(`req.query`, req.query);
     exec(`cd .local/bin && /app/.local/bin/youtube-dl ${decodeURIComponent(req.query.videoUrl)} -f worst --write-auto-sub&&
-./videogrep -i *.mp4 --use-vtt --search '${req.query.searchTerm}'&& mv supercut.mp4 ../../public/
+./videogrep -i *.mp4 --use-vtt -o ${Date.now()} --search '${req.query.searchTerm}'&& mv ${Date.now()}.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
@@ -47,34 +47,34 @@ app.get('/download', (req, res) => {
     })
 });
 
-// var aws = require('aws-sdk')
-// var multer = require('multer')
-// var multerS3 = require('multer-s3')
-// var config = new aws.Config({
+var aws = require('aws-sdk')
+var multer = require('multer')
+var multerS3 = require('multer-s3')
+var config = new aws.Config({
 
-//     accessKeyId: process.env.accessKeyId,
-//     secretAccessKey: process.env.secretAccessKey,
-//     region: 'eu-de',
-//     endpoint: 's3.eu-de.cloud-object-storage.appdomain.cloud',
-//     s3BucketEndpoint: false
-// });
+    accessKeyId: process.env.accessKeyId,
+    secretAccessKey: process.env.secretAccessKey,
+    region: 'eu-de',
+    endpoint: 's3.eu-de.cloud-object-storage.appdomain.cloud',
+    s3BucketEndpoint: false
+});
 
-// var s3 = new aws.S3(config
-// )
+var s3 = new aws.S3(config
+)
 
-// var upload = multer({
-//     storage: multerS3({
-//         s3: s3,
-//         bucket: process.env.bucketName,
-//         metadata: function (req, file, cb) {
-//             console.log(`file`, file);
-//             cb(null, { fieldName: file.fieldname });
-//         },
-//         key: function (req, file, cb) {
-//             cb(null, file.originalname)
-//         }
-//     })
-// })
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: process.env.bucketName,
+        metadata: function (req, file, cb) {
+            console.log(`file`, file);
+            cb(null, { fieldName: file.fieldname });
+        },
+        key: function (req, file, cb) {
+            cb(null, file.originalname)
+        }
+    })
+})
 
 // app.post('/upload', upload.array('photos', 3), function (req, res, next) {
 //     res.send('Successfully uploaded ' + req.files.length + ' files!')
