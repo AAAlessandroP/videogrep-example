@@ -34,7 +34,7 @@ cd .local/bin&&
 app.get('/download', (req, res) => {
     console.log(`req.query`, req.query);
     exec(`cd .local/bin && /app/.local/bin/youtube-dl ${decodeURIComponent(req.query.videoUrl)} -f worst --write-auto-sub&&
-./videogrep -i *.mp4 --use-vtt -o a${Date.now()} --search '${req.query.searchTerm}'&& mv a${Date.now()}.mp4 ../../public/
+./videogrep -i *.mp4 --use-vtt } --search '${req.query.searchTerm}'&& mv supercut.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
