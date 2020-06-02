@@ -53,10 +53,11 @@ app.get("/", (req, res) => {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>🎥VideoGrep🎥</title>
     </head>
     
     <body>
+    <h3>Lista Filmati ricavati con VideoGrep</h3><br>
     <ul>`;
     fs.readdirSync("public/").forEach(filename => {
         s += `<li><a href='/${filename}'>${filename}</a></li>`;
