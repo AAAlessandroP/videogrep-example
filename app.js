@@ -35,7 +35,7 @@ let i = 0;
 app.get('/download', (req, res) => {
     console.log(`req.query`, req.query);
     exec(`cd .local/bin && /app/.local/bin/youtube-dl ${decodeURIComponent(req.query.videoUrl)} -f worst --write-auto-sub&&
-./videogrep -i *.mp4 --use-vtt -o 'video_${i}.mp4' --search '${req.query.searchTerm}'&& mv supercut.mp4 ../../public/
+./videogrep -i *.mp4 --use-vtt -o 'video_${i}.mp4' --search '${req.query.searchTerm}'&& mv video_${i}.mp4 ../../public/
 `, function callback(error, stdout, stderr) {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
