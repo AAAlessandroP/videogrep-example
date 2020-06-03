@@ -1,9 +1,7 @@
 const express = require("express");
 const app = express();
 console.log("* app in funzione *");
-const uri = `mongodb+srv://corona:${process.env.PASS}@miocluster2-igwb8.mongodb.net/test?retryWrites=true&w=majority`;
-const { ObjectId } = require("mongodb");
-const MongoClient = require("mongodb").MongoClient;
+
 var bodyParser = require("body-parser");
 const fs = require("fs");
 // app.use(express.static("mia_pag"));
@@ -40,7 +38,7 @@ app.get('/download', (req, res) => {
         console.log(`error`, error);
         console.log(`stderr`, stderr);
         console.log(`stdout`, stdout);
-        res.redirect("/");
+        res.redirect(`/video_${i++}.mp4`);
     })
 });
 
